@@ -12,7 +12,7 @@
             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <h1>Custom Directives</h1>
                 <p v-highlight:background.delayed="'red'">Colour this</p>
-                <p v-local-highlight:background.delayed.blink="'red'">Blinking colours</p>
+                <p v-local-highlight:background.delayed.blink="{mainColour: 'red', secondColour: 'green', delay: 500}">Blinking colours</p>
             </div>
         </div>
     </div>
@@ -30,8 +30,8 @@
                     }
                     
                     if (binding.modifiers['blink']) {
-                        let mainColour = binding.value;
-                        let secondColour = 'blue';                        
+                        let mainColour = binding.value.mainColour;
+                        let secondColour = binding.value.secondColour;                        
                         let currentColour = mainColour;
 
                         setTimeout(() => {
@@ -44,14 +44,14 @@
                                 } else {
                                     el.style.color = currentColour;
                                 }
-                            },1000);
+                            },binding.value.delay);
                         }, delay);
                     } else {
                         setTimeout(() => {                           
                             if (binding.arg === 'background') {
-                                el.style.backgroundColor = binding.value;
+                                el.style.backgroundColor = binding.value.mainColour;
                             } else {
-                                el.style.color = binding.value;
+                                el.style.color = binding.value.mainColour;
                             }
                         }, delay);
                     }
